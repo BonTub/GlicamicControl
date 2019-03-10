@@ -16,7 +16,8 @@ function [xdot] = GlucoseModel(t,x,u,param)
     EGP0 = param(13);
     F01 = param(14);
     tmaxI = param(15);
-    Dg=1;
+    Dg=0;
+    %u = u*exp(-0.1*t);
     
     %Formulized parameters
     G = x(1)/Vg;
@@ -37,12 +38,14 @@ function [xdot] = GlucoseModel(t,x,u,param)
 
     %System equations
     xdot=zeros(8,1);
-    xdot(1) = -(F01c/(Vg*G)+x(6))*x(1)+k12*x(2)-Fr+Ug+EGP0*(1-x(8)); %dQ1/dt
-    xdot(2) =  x(6)*x(1)-(k12+x(7))*x(2);                            %dQ2/dt
-    xdot(3) =  u-x(3)/tmaxI;                                         %dS1/dt;
-    xdot(4) =  x(3)/tmaxI - x(4)/tmaxI;                              %dS2/dt
-    xdot(5) =  UI/VI-ke*x(5);                                        % dI/dt
+    xdot(1) = -F01c-x(6)*x(1)+k12*x(2)-Fr+Ug+EGP0*(1-x(8)); %dQ1/dt
+    xdot(2) = x(6)*x(1)-(k12+x(7))*x(2); %dQ2/dt
+    xdot(3) = u-x(3)/tmaxI; %dS1/dt;
+    xdot(4) = x(3)/tmaxI - x(4)/tmaxI; %dS2/dt
+    xdot(5) = UI/VI-ke*x(5);
     xdot(6) = -ka1*x(6)+kb1*x(5);
     xdot(7) = -ka2*x(7)+kb2*x(5);
     xdot(8) = -ka3*x(8)+kb3*x(5);
+    
+    
 end

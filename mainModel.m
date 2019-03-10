@@ -21,22 +21,23 @@ param(14) = 0.0097;
 param(15) = 55;
 
 %% Model simulation
-tspan=0:1:2000;
-u=11;
+tspan=0:1:3000;
+u=0.1;
 f = @(t,x)GlucoseModel(t,x,u,param);
-x0 = [5*param(7)
-    4*param(7)
-    0.01
-    0.01
+x0 = [1.04
+    0.485
     0
-    param(10)
-    param(11)
-    param(12)];
+    0
+    0
+    0
+    0
+    0];
 
 [t,x]=ode45(f, tspan, x0);
-y = x(:,1)./param(7);
-%% Generating figures
 figure
 hold on
-plot(t,y)
-legend('Stable Dead')
+for i = 1:1
+    y(:,i)= x(:,i)/param(7);
+plot(t,y(:,i))
+end
+%% Generating figures
