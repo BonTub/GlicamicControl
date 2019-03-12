@@ -95,6 +95,6 @@ x0 = [1.04
     0
     0];
 
-[x,t] = lsim(System,[u; Ug; Constant_input], tspan, x0);
+[x,t] = lsim(System,[u; Ug; Constant_input]', tspan, x0);
 figure
 plot(t,x)
